@@ -41,6 +41,8 @@ public class Model {
 			}
 		}
 		System.out.println(this.graph) ;
+		System.out.println("Archi: "+this.graph.vertexSet().size());
+		System.out.println("Vertici: "+this.graph.edgeSet().size());
 		
 		return this.cibi ;
 	}
