@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polito.tdp.food.model.Adiacenza;
 import it.polito.tdp.food.model.Condiment;
 import it.polito.tdp.food.model.Food;
 import it.polito.tdp.food.model.Portion;
@@ -108,5 +109,33 @@ public class FoodDao {
 			return null ;
 		}
 
+	}
+	public List<Adiacenza>elencoCibi(){
+		String sql = 	"SELECT f.food_code as fc,COUNT(DISTINCT(p.portion_id))AS tot " + 
+						"FROM food f, `portion` p " + 
+						"WHERE f.food_code= p.food_code " + 
+						"GROUP BY f.food_code ";
+		try {
+			Connection conn = DBConnect.getConnection() ;
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			List<Adiacenza> list = new ArrayList<>() ;
+			
+			ResultSet res = st.executeQuery() ;
+			while(res.next()) {
+				try {
+					Adiacenza a=new Adiacenza(res.getString("fc"),res.getDouble("tot"));
+					list.add(a);
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			
+			conn.close();
+			return list ;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null ;
+		}
 	}
 }

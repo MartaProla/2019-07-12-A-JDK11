@@ -49,6 +49,8 @@ public class FoodController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	txtResult.clear();
+    	Integer x= Integer.parseInt(this.txtPorzioni.getText());
+    	this.model.creaGrafo(x);
     	txtResult.appendText("Creazione grafo...");
     }
     
